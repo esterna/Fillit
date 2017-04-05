@@ -1,4 +1,14 @@
-
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   file_checker.c                                     :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: esterna <marvin@42.fr>                     +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2017/04/04 12:33:32 by esterna           #+#    #+#             */
+/*   Updated: 2017/04/05 12:04:01 by esterna          ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
 
 int		checkchrs(char *str)
 {
@@ -25,13 +35,13 @@ int		checkrows(char *str)
 		i = 4;
 		while (i)
 		{
-			if (!(*str == '.' || *str == '#'))
+			if (*str == '.' || *str == '#')
 			   str++;
 			else
 				return (0);
 			i--;	
 		}
-		if (*str != '\n' && (*(++str) != '\n' || *str != '\0'))
+		if (*str != '\n' || *(++str) != '\0')
 			return (0);
 		str++;
 	}
@@ -40,9 +50,6 @@ int		checkrows(char *str)
 
 int		checktets(char *str)
 {
-	char *tmp;
-
-	tmp = str;
 	while (*str)
 	{
 		while (*str == '.' || *str == '\n')
@@ -61,6 +68,7 @@ int		checktets(char *str)
 int		filechecker(char *filename)
 {
 	int		i;
+	int		r;
 	int		fd;
 	char	*buf;
 
@@ -71,18 +79,23 @@ int		filechecker(char *filename)
 		ft_putstr("error in opening file\n");
 		return (0);
 	}
-	while (write(fd, buf, 21) != -1)
+	while (read(fd, buf, 21) = r)
 	{
+		if (r == -1)
+		{
+			ft_putstr("error in reading file\n");
+			return (0);
+		}
 		i++;
 		if (!checkchrs(buf) || !checkrows(buf) || !checktets(buf) || i > 26)
 		{
-			ft_putstr("error\n");
+			ft_putstr("error invalid tetrimino in file\n");
 			return (0);
 		}
 	}
 	if (i > 26)
 	{
-		ft_putstr("error\n");
+		ft_putstr("error too many tetriminos in file\n");
 		return (0);
 	}
 	if (close(fd) == -1)

@@ -1,12 +1,23 @@
-
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   displayBoard.c                                     :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: esterna <marvin@42.fr>                     +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2017/04/04 12:32:43 by esterna           #+#    #+#             */
+/*   Updated: 2017/04/05 11:22:32 by esterna          ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
 
 #include "libft.h"
 
-void		displayBoard(char **board)
+void		displayBoard(char *board)
 {
-	while (*board)
+	/*while (*board)
 	{
 		ft_putstr(*board);
 		board++;
-	}
+	}*/
+	ft_putstr(board);
 }

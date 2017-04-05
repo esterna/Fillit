@@ -1,4 +1,14 @@
-
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   solve.c                                            :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: esterna <marvin@42.fr>                     +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2017/04/04 12:34:06 by esterna           #+#    #+#             */
+/*   Updated: 2017/04/05 11:36:54 by esterna          ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
 
 #include "libft.h"
 
@@ -9,7 +19,17 @@ char		**subArray(char **pieces, int i)
 	return (pieces);
 }
 
-bool		solve(char **board, char **pieces, int numPieces)
+int			boardSize(char *board)
+{
+	int i;
+
+	i = 0;
+	while (*board != '\n')
+		i++;
+	return (i);
+}
+
+bool		solve(char *board, char **pieces, int numPieces)
 {
 	int i;
 
@@ -29,7 +49,7 @@ bool		solve(char **board, char **pieces, int numPieces)
 		i++;
 		if (i == numPieces)
 		{
-			board = makeBoard(ft_strlen(*board));
+			board = makeBoard(boardSize(board) + 1);
 			i = 0;
 		}
 	}
