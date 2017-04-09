@@ -6,9 +6,11 @@
 /*   By: esterna <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/04/04 12:33:32 by esterna           #+#    #+#             */
-/*   Updated: 2017/04/05 12:04:01 by esterna          ###   ########.fr       */
+/*   Updated: 2017/04/07 14:04:33 by dgerard          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
+
+#include "libft.h"
 
 int		checkchrs(char *str)
 {
@@ -68,20 +70,20 @@ int		checktets(char *str)
 int		filechecker(char *filename)
 {
 	int		i;
-	int		r;
 	int		fd;
 	char	*buf;
 
-	i = 0;
+	i = 0;	
+	buf = (char *)malloc(sizeof(char) * (21));
 	fd = open(filename, O_RDONLY);
 	if (fd < 0)
 	{
 		ft_putstr("error in opening file\n");
 		return (0);
 	}
-	while (read(fd, buf, 21) = r)
+	while (read(fd, buf, 21) > 0)
 	{
-		if (r == -1)
+		if (fd == -1)
 		{
 			ft_putstr("error in reading file\n");
 			return (0);

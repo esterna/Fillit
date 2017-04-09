@@ -6,11 +6,11 @@
 /*   By: esterna <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/04/04 12:34:06 by esterna           #+#    #+#             */
-/*   Updated: 2017/04/05 11:36:54 by esterna          ###   ########.fr       */
+/*   Updated: 2017/04/08 22:59:41 by esterna          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "libft.h"
+#include <stdbool.h>
 
 char		**subArray(char **pieces, int i)
 {
@@ -19,37 +19,40 @@ char		**subArray(char **pieces, int i)
 	return (pieces);
 }
 
-int			boardSize(char *board)
-{
-	int i;
-
-	i = 0;
-	while (*board != '\n')
-		i++;
-	return (i);
-}
-
-bool		solve(char *board, char **pieces, int numPieces)
+bool		solve(char *board, int boardSize, char **pieces, int numPieces)
 {
 	int i;
 
 	if (numPieces == 0)
 	{
-		displayBoard(board);
+		displayBoard(board, boardSize);
 		return (true);
 	}
+	if (numPieces == 1 && boardSize <= 3)
+	{
+		if (ft_strcmp(pieces[0], "1.4.5"))
+		   board++;
+		if (!ft_strcmp(pieces[0], "1.2.3") || !ft_strcmp(pieces[0], "4.8.12"))
+			board++;
+		addPiece(board, boardSize, pieces[i], i);
+		displayBoard(board, boardSize);
+		return (true);
+	}
+	if (numPieces > 1 && boardSize < 4)
+		boardSize == 4;
 	i = 0;
 	while (i <= numPieces)
 	{
-		if (pieceFits(board, pieces[i], i))
+		if (pieceFits(board, boardSize, pieces[i]))
 		{
-			if (Solve(addPiece(board, pieces[i]), subArray(pieces, i), numPieces - 1))
+			if (Solve(addPiece(board, boardSize, pieces[i], i),
+						boardSize, subArray(pieces, i), numPieces - 1))
 				return (true);
 		}
 		i++;
 		if (i == numPieces)
 		{
-			board = makeBoard(boardSize(board) + 1);
+			boardSize++;
 			i = 0;
 		}
 	}

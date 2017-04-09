@@ -6,7 +6,7 @@
 /*   By: esterna <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/04/04 12:34:15 by esterna           #+#    #+#             */
-/*   Updated: 2017/04/05 12:13:12 by esterna          ###   ########.fr       */
+/*   Updated: 2017/04/08 23:22:19 by esterna          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,69 +14,62 @@
 
 char		*trans_g1(char *buf)
 {
-	if (buf + 5 == '#' && buf + 10 == '#' && buf + 15 == '#')
-		return ("l");
-	else if (buf + 10 == '#')
+	if (*(buf + 5) == '#' && *(buf + 10) == '#' && *(buf + 15) == '#')
+		return ("5.10.15");
+	else if (*(buf + 10) == '#')
 	{
-		if (buf + 11 == '#')
-			return ("L");
-		else if (buf + 9 == '#')
-			return ("bL");
-		else if (buf + 6 == '#')
-			return ("rT");
-		else
-			return ("lT");
+		if (*(buf + 11) == '#')
+			return ("5.10.11");
+		else if (*(buf + 9) == '#')
+			return ("5.10.9");
+		else if (*(buf + 6) == '#')
+			return ("5.10.6");
+		return ("4.10.5");
 	}
-	else
-	{
-		if (buf + 4 == '#' && buf + 6 == '#')
-			return ("uT");
-		else if (buf + 4 == '#')
-			return ("2+90");
-		else
-			return ("s+90");
-	}
+	if (*(buf + 4) == '#' && *(buf + 6) == '#')
+		return ("4.1.1");
+	else if (*(buf + 3) == '#')
+		return ("3.1.1");
+	else if (*(buf + 4) == '#')
+		return ("4.1.4");
+	else if (*(buf + 7) == '#')
+		return ("5.1.1");
+	return ("5.1.5");
 }
 
 char		*trans_g2(char *buf)
 {
-	if (buf + 1 == '#' && buf + 2 == '#' && buf + 3 == '#')
-		return ("l+90");
-	else if (buf + 2 == '#')
+	if (*(buf + 1) == '#' && *(buf + 2) == '#' && *(buf + 3) == '#')
+		return ("1.2.3");
+	else if (*(buf + 2) == '#')
 	{
-		if (buf + 5 == '#')
-			return ("L+90");
-		else if (buf + 6 == '#')
-			return ("T");
-		else
-			return ("bL-90");
+		if (*(buf + 5) == '#')
+			return ("1.1.3");
+		else if (*(buf + 6) == '#')
+			return ("1.1.4");
+		return ("1.1.5");
 	}
 	else
 	{
-		if (buf + 5 == '#')
+		if (*(buf + 5) == '#')
 		{
-			if (buf + 4 == '#')
-				return ("s");
-			else if (buf + 10 == '#')
-				return ("bL+180");
-			return ("sq");
+			if (*(buf + 4) == '#')
+				return ("1.3.1");
+			else if (*(buf + 10) == '#')
+				return ("1.4.5");
+			return ("1.4.1");
 		}
-		else
-			return (buf + 11 == '#' ? "L+180" : "2");
+		return (*(buf + 11) == '#' ? "1.5.5" : "1.5.1");
 	}
 }
 
 char		*translate(char *buf)
 {
-	char **lst;
-
-	lst = *lstptr;
 	while (*buf != '#')
 		buf++;
-	if (buf + 1 != '#')
+	if (*(buf + 1) != '#')
 		return (trans_g1(buf));
-	else
-		return (trans_g2(buf));
+	return (trans_g2(buf));
 }
 
 char		**tetriTranslator(char *file, int numTetri)
@@ -87,18 +80,15 @@ char		**tetriTranslator(char *file, int numTetri)
 	char	**lst;
 
 	i = 0;
+	buf = (char *)malloc(sizeof(char) * (21));
 	fd = open(file, O_RDONLY);
 	if (fd < 0)
 	{
 		ft_putstr("error in opening file\n");
 		return (NULL);
 	}
-	lst = (char **)malloc(sizeof(char *) * (numTetri + 1));
-	lst[numTetri] = NULL;
-	while (lst[i] != NULL)
-		lst[i++] = (char *)malloc(sizeof(char) * 7);
-	i = 0;
-	while (read(fd, buf, 21) == fd)
+	lst = ft_2dstrnew((numTetri), 6);
+	while (read(fd, buf, 21) > 0)
 	{
 		if (fd == -1)
 		{
@@ -107,7 +97,7 @@ char		**tetriTranslator(char *file, int numTetri)
 		}
 		ft_strcpy(lst[i++], translate(buf));
 	}
-	if (i + 1 != numTetri)
+	if (i != numTetri + 1)
 		ft_putstr("Couldn't find all Tetrimonos.\n");
 	return (lst);
 }
