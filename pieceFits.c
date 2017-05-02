@@ -6,45 +6,56 @@
 /*   By: esterna <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/04/05 12:37:37 by esterna           #+#    #+#             */
-/*   Updated: 2017/04/08 22:59:37 by esterna          ###   ########.fr       */
+/*   Updated: 2017/04/24 18:03:10 by esterna          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <stdbool.h>
+#include "libft.h"
+#include "libfill.h"
 
-int			nextNum(char **str)
+bool				pieceFits(char **board, int boardSize, char *piece, int *place)
 {
-	while (ft_isdigit(*str) && **str)
-		(*str)++;
-	while (!ft_isdigit(*str) && **str)
-		(*str)++;
-	return (ft_atoi(*str));
-}
-
-bool				pieceFits(char *board, int boardSize, char *piece)
-{
-	int i;
+	int r;
+	int c;
+	int t1;
+	int t2;
 	char *p_tmp;
 
-	i = 0;
-	p_tmp = piece;
-	if (!*piece || !piece)
+	r = 0;
+	c = 0;
+	p_tmp = piece + 2;
+	if (*piece == 'P')
 		return (false);
-	while (*board)
+	piece += 2;
+	while (board[r] && r < boardSize && c < boardSize)
 	{
-		while (i < boardSize && *board != '.')
-			board++;
-		if (i == boardSize)
-			i = 0;
+		while (c < boardSize && board[r][c] != '.' && board[r][c])
+			c++;
+		if (c >= boardSize || !board[r][c])
+		{
+			c = 0;
+			r++;
+		}
+		else if ((t1 = r + nextNum(&p_tmp)) < boardSize && (t2 = c + nextNum(&p_tmp)) < boardSize
+				&& t1 >= 0 && t2 >= 0 && board[t1][t2] == '.'
+				&&(t1 = t1 + nextNum(&p_tmp)) < boardSize && (t2 = t2 + nextNum(&p_tmp)) < boardSize
+				&& t1 >= 0 && t2 >= 0 && board[t1][t2] == '.'
+				&&(t1 = t1 + nextNum(&p_tmp)) < boardSize && (t2 = t2 + nextNum(&p_tmp)) < boardSize
+				&& t1 >= 0 && t2 >= 0 && board[t1][t2] == '.')
+		{
+			place[0] = r;
+			place[1] = c;
+
+			return (true);
+		}
 		else
 		{
-			if (*(board + (ft_atoi(p_tmp) * (boardSize / 4)) + (boardSize % 4)) == '.'
-					&& *(board + (nextNum(&p_tmp) * (boardSize / 4)) + (boardSize % 4)) == '.' 
-					&& *(board + (nextNum(&p_tmp) * (boardSize / 4)) + (boardSize % 4)) == '.')
-				return (true);
 			p_tmp = piece;
-			board++;
+			c++;
 		}
 	}
+	place[0] = 0;
+	place[1] = 0;
 	return (false);
 }

@@ -1,23 +1,34 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   test_tetriTranslator.c                             :+:      :+:    :+:   */
+/*   test_newmakeboard.c                                :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: dgerard <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2017/04/05 16:51:53 by dgerard           #+#    #+#             */
-/*   Updated: 2017/04/13 11:48:03 by dgerard          ###   ########.fr       */
+/*   Created: 2017/04/13 12:41:05 by dgerard           #+#    #+#             */
+/*   Updated: 2017/04/13 16:15:58 by dgerard          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
+#include "libfill.h"
 
-int				main(void)
+char			**makeBoardmini()
 {
-	int i = -1;
-	char **res;
-	
-	res = tetriTranslator("validfiles/allvalid", 18);
-	while (i++ < 18)
-		printf("%s\n", res[i]);
+	char **board;
+	int i;
+
+	i = -1;
+	board = ft_2dstrnew(BOARD_SIZE, BOARD_SIZE);
+	while (i++ < BOARD_SIZE)
+		ft_memset(board[i], (int)'.', BOARD_SIZE);
+	return (board);
+}
+
+int		main(void)
+{
+	char **board;
+
+	board = makeBoardmini();
+	displayBoard(board, BOARD_SIZE);
 }

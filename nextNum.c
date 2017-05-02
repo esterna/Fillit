@@ -1,23 +1,26 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   test_tetriTranslator.c                             :+:      :+:    :+:   */
+/*   nextNum.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dgerard <marvin@42.fr>                     +#+  +:+       +#+        */
+/*   By: esterna <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2017/04/05 16:51:53 by dgerard           #+#    #+#             */
-/*   Updated: 2017/04/13 11:48:03 by dgerard          ###   ########.fr       */
+/*   Created: 2017/04/17 16:37:27 by esterna           #+#    #+#             */
+/*   Updated: 2017/04/17 18:25:52 by esterna          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
+#include "libfill.h"
 #include "libft.h"
 
-int				main(void)
+int            nextNum(char **str)
 {
-	int i = -1;
-	char **res;
-	
-	res = tetriTranslator("validfiles/allvalid", 18);
-	while (i++ < 18)
-		printf("%s\n", res[i]);
+	int i;
+
+	i = ft_atoi(*str);
+	while ((**str == '-' || ft_isdigit(**str)) && **str)
+		(*str)++;
+	while (**str == '.' && **str)
+		(*str)++;
+	return (i);
 }

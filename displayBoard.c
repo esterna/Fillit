@@ -6,30 +6,29 @@
 /*   By: esterna <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/04/04 12:32:43 by esterna           #+#    #+#             */
-/*   Updated: 2017/04/07 14:50:18 by esterna          ###   ########.fr       */
+/*   Updated: 2017/04/17 16:47:27 by esterna          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
+#include "libfill.h"
 
-void		displayBoard(char *board, int boardSize)
+void		displayBoard(char **board, int boardSize)
 {
-	int i;
-	int n;
+	int c;
+	int r;
 
-	i = 0;
-	n = 0;
-	while (n < boardSize)
+	c = 0;
+	r = 0;
+	while (r < BOARD_SIZE && r < boardSize && board[r])
 	{
-		while (i < boardSize)
+		while (c < BOARD_SIZE && c < boardSize && board[r][c])
 		{
-			ft_putchar(*board);
-			board++;
-			i++;
+			ft_putchar(board[r][c]);
+			c++;
 		}
 		ft_putchar('\n');
-		n++;
-		i = 0;
-		board = board + (13 - boardSize);
+		c = 0;
+		r++;
 	}
 }
