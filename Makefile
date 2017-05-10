@@ -1,14 +1,11 @@
 NAME = fillit
-CFLAGS = -Wall -Wextra -Werror -g
+CFLAGS = -Wall -Wextra -Werror
 DEPS = libft.a
 FUNCTIONS = main.c\
-			pieceFits.c\
-			addPiece.c\
-			nextNum.c\
 			file_checker.c\
-			displayBoard.c\
-			tetriTranslator.c\
-			solve.c\
+			translator.c\
+			solver.c\
+			check_add_remove.c\
 
 all: $(NAME)
 
@@ -16,8 +13,8 @@ $(NAME):
 	gcc $(CFLAGS) -o $@ $(FUNCTIONS) libft.a
 
 clean:
-	/bin/rm -f rm $(NAME)
 
 fclean: clean
+	/bin/rm -f rm $(NAME)
 
 re: fclean all
